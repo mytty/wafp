@@ -1,0 +1,13 @@
+CREATE TABLE `tbl_results` (
+`id` INTEGER PRIMARY KEY NOT NULL ,
+`store_id` INTEGER NOT NULL ,
+`csum` VARCHAR(256) NOT NULL ,
+`path` MEDIUMTEXT NOT NULL ,
+`retcode` VARCHAR(4) NOT NULL
+);
+CREATE TABLE `tbl_store` (
+`id` INTEGER PRIMARY KEY NOT NULL ,
+`name` VARCHAR(256) NOT NULL ,
+`timestamp` VARCHAR(10) NOT NULL ,
+`info` MEDIUMTEXT NOT NULL
+);

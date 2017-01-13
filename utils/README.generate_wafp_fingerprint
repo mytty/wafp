@@ -1,0 +1,47 @@
+                       WAFP
+            (c) Richard Sammet (e-axe)
+              http://mytty.org/wafp/
+
+
+INTRODUCTION
+------------
+It is strongly recommended to read the following lines before you use WAFP to generate your own Web Application Finger Prints, because 
+the execution of the script in a wrong way could destroy your existing Finger Print Database.
+
+
+USAGE
+-----
+The script will be executed via:
+
+./generate_wafp_fingerprint.sh [OPTIONS]
+
+
+The following list contains the available Options:
+--
+
+ APPLICATION_PATH  should be the path to the Web Application files - like the content of the htdocs folder of a wordpress installation.
+                   The folder containing the Web Application files must be named like this:
+                   APPLICATIONNAME-MAJORVERSION.VERSION.SUB.ASO-RC-ALPHA-BETA
+ FINGERPRINT_FILE  is the path to a file containing exported Finger Prints. 
+ EXPORT            this means the generated Finger Print data will not be stored within the DB but printed to stdout
+                   in a format which can be imported with IMPORT:
+ IMPORT            can be used to import some EXPORTED fingerprints.
+
+
+EXAMPLE USAGE
+-------------
+                   ./generate_wafp_fingerprint.sh /tmp/wordpress-2.7.1
+                       where /tmp/wordpress-2.7.1 holds the extracted wordpress tarball.
+                       This will generate the Finger Prints for the provided wordpress version and stores it inside
+                       the SQL database.
+                   ./generate_wafp_fingerprint.sh /tmp/wordpress-2.7.1 EXPORT > wordpress-2.7.1.fp
+                       this will do exactly the same like the first example but it will not store the Finger Print data inside the DB.
+                       The Finger Print data is written to STDOUT where it gets redirected to a file called wordpress-2.7.1.fp.
+                   ./generate_wafp_fingerprint.sh wordpress-2.7.1.fp IMPORT
+                       this will import the Finger Print data contained in wordpress-2.7.1.fp into the sql database.
+
+
+Now that you know enough about generating WAFP finger prints you should do the following:
+touch i_read_README.generate_wafp_fingerprint
+
+After you created the file "i_read_README.generate_wafp_fingerprint" you will be able to execute generate_wafp_fingerprint.sh.

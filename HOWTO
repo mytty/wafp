@@ -1,0 +1,107 @@
+                       WAFP
+            (c) Richard Sammet (e-axe)
+              http://mytty.org/wafp/
+
+
+HOWTO use WAFP the right way?
+-----------------------------
+ 
+This is a guide on how to use WAFP (Web Application Finger Printer) the right way.
+I will explain the most important features and show some of the most useful usage scenarios:
+ 
+1) Standard WAFP usage
+2) Advanced WAFP usage
+3) Online Updates
+ 
+1.) Standard WAFP usage
+--
+If you want to find out the detailed version of a Web Application thats not running on
+a server you have shell access to, you can use WAFP in its standard Finger Printing mode:
+ 
+Targeted Site: http://www.example.com
+Targeted Application: /board
+ 
+Out of the Style and/or file/dir structure you saw by browsing the board
+you know it needs to be some version of phpBB.
+ 
+Now you can fire up WAFP like this:
+ 
+./wafp.rb -p phpBB http://www.example.com/board
+ 
+Thats it - within a few seconds to minutes (depending on your and the targeted sites
+connection speed and your machines computing power) you will get the detailed version
+information for the phpBB installation running on http://www.example.com if the right
+Finger Prints are stored in you local WAFP DB.
+
+If you do not know which product is driving the website, you can start WAFP in
+its auto identify mode which is the default:
+
+./wafp.rb http://www.example.com/board
+
+This way WAFP will try to identify the product before starting the detailed
+version fingerprinting.
+
+ 
+2.) Advanced WAFP usage
+--
+Now that you know on how to use it the easy way, lets have a look at some of
+its "advanced" features.
+ 
+Let's assume that you are facing a site and you have no fucking clue which Web Application is
+running there and WAFP, in its auto identify mode was also not able to identify it.
+Well, yes, you can tell WAFP to try to identify the Web Application for you - if WAFP have
+at least one Finger Print for one version of that Web Application in its database, its most likely
+that it will be able to give you some result from which you can see which Web Application is running there.
+ 
+Do it like that:
+ 
+./wafp.rb --any http://www.example.com
+ 
+WAFP will try to grab all files for all products and versions it knows (it will fetch
+every file just once, even if the file exists in multiple Finger Prints) and based
+on these information it will report the best matches.
+ 
+And, if you do not want to perform all the processing at once, you can tell WAFP to just
+download and store the files information inside the scanning DB:
+ 
+./wafp.rb --any --fetch --store IMBA_FPRINT http://www.example.com
+ 
+Later on, maybe on another, much faster machine, you can start WAFP in the dry run mode
+to process and analyse the collected data:
+ 
+./wafp.rb --dry IMBA_FPRINT
+ 
+You can also add some product and version information when using the dry run mode:
+ 
+./wafp.rb -p wordpress -v '2.%' --dry IMBA_FPRINT
+ 
+This tells WAFP to only analyse the collected data against products matching "wordpress"
+with a version starting with "2.".
+ 
+If you are facing a Website which requires Basic-Auth you can just add the credentials
+to the URL:
+
+./wafp.rb http://username:password@www.example.com
+ 
+
+3.) Online Updates
+--
+Yes, you can update your local version of the Finger Print database from the most
+up to date version of the master database online.
+ 
+The updates are done in an incremental way - that means, if you are just missing three
+Finger Prints, than only those three Finger Prints are going to be downloaded and applied
+to your database.
+ 
+If you want to see if you are running the latest DB version:
+ 
+./online_update.sh --show
+ 
+This will show you which Finger Prints would be downloaded and installed - if there are any missing.
+ 
+./online_update.sh --update
+ 
+Performs the actual update. WAFP itself needs to be updated manualy.
+
+
+Visit http://mytty.org/wafp for more information!

@@ -1,0 +1,13 @@
+CREATE TABLE `tbl_fprint` (
+`id` INTEGER PRIMARY KEY NOT NULL ,
+`product_id` INTEGER NOT NULL ,
+`csum` VARCHAR(256) NOT NULL ,
+`path` MEDIUMTEXT NOT NULL
+);
+CREATE TABLE `tbl_product` (
+`id` INTEGER PRIMARY KEY NOT NULL ,
+`name` VARCHAR(256) NOT NULL ,
+`versionstring` VARCHAR(1024) NOT NULL ,
+`timestamp` VARCHAR(10) NOT NULL ,
+`info` MEDIUMTEXT NOT NULL
+);
